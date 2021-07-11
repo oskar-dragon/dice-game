@@ -1,0 +1,85 @@
+* {
+	margin: 0;
+	padding: 0;
+}
+
+html {
+	box-sizing: border-box;
+	font-size: 62.5%;
+}
+
+*,
+*:before,
+*:after {
+	box-sizing: inherit;
+}
+
+body {
+	background-image: linear-gradient(to right, #cfd9df, #e2ebf0);
+	font-family: "Roboto", sans-serif;
+}
+
+.container {
+	max-width: 500px;
+	margin: 2rem auto;
+	background: #f2f2f2;
+	text-align: center;
+}
+
+.message {
+	text-align: center;
+	padding: 4rem 0 3rem 0;
+	font-size: 5rem;
+}
+
+.players {
+	width: 100%;
+	display: flex;
+	justify-content: space-around;
+	margin-bottom: 3rem;
+}
+
+#player1 h1,
+#player2 h1 {
+	font-size: 3rem;
+	text-align: center;
+	margin-bottom: 2rem;
+}
+
+.dice {
+	border-radius: 10px;
+	width: 112px;
+	height: 112px;
+	background: #ffd3b6;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	font-size: 10rem;
+}
+
+button {
+	color: #fff;
+	border-radius: 5px;
+	border: none;
+	padding: 2rem;
+	font-size: 1.7rem;
+	cursor: pointer;
+	margin-bottom: 5rem;
+}
+
+#rollBtn {
+	background: #ff8b94;
+}
+
+#resetBtn {
+	background: #ffaaa5;
+	display: none;
+}
+
+button:focus {
+	outline: none;
+}
+
+.active {
+	box-shadow: 5px 5px 17px -3px rgba(0, 0, 0, 0.17);
+}
