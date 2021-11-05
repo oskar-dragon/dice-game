@@ -1,5 +1,5 @@
 # Dice Game
-> Web app alternative to the classic board game.
+> Web app alternative to the classic game.
 > Live demo [_here_](https://oskar-dragon.github.io/dice-game/). 
 
 ## Table of Contents
