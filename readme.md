@@ -28,14 +28,6 @@ The first player to reach 25 points on GLOBAL score wins the game. The score is 
 - CSS3
 - JavaScript
 
-## Features
-
-List the ready features here:
-
-- Awesome feature 1
-- Awesome feature 2
-- Awesome feature 3
-
 ## Demo
 
 ![Example](https://i.gyazo.com/2aac1cfd7e22be4f4ed317000a54dee4.gif)
