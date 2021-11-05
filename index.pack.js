@@ -1,92 +1,99 @@
-// Variables for the game state
 let player1Score = 0;
 let player2Score = 0;
-let ifPlayer1Turn = true;
+let isPlayer1Turn = true;
 
-// Variables to store references to the DOM nodes
-let playerTurn = document.querySelector(".message");
-let player1Scoreboard = document.getElementById("player1score");
-let player2Scoreboard = document.getElementById("player2score");
-let player1Dice = document.getElementById("player1dice")
-let player2Dice = document.getElementById("player2dice")
-const rollBtn = document.getElementById("rollBtn")
-const resetBtn = document.getElementById("resetBtn")
+// DOM Elements
+const playerTurn = document.querySelector(".message");
+const player1Scoreboard = document.getElementById("player1score");
+const player2Scoreboard = document.getElementById("player2score");
+const player1Dice = document.getElementById("player1dice");
+const player2Dice = document.getElementById("player2dice");
+const rollBtn = document.getElementById("rollBtn");
+const resetBtn = document.getElementById("resetBtn");
 
-
-// Functions to make code DRYer
 function showResetButton() {
-     rollBtn.style.display = "none"
-     resetBtn.style.display = "inline-block"
+  rollBtn.style.display = "none";
+  resetBtn.style.display = "inline-block";
 }
 
-//Event listeners (buttons)
-document.getElementById("rollBtn").addEventListener("click", function() {
-     let rollDice = Math.floor(Math.random() * 6) +1;
+function rollDice() {
+  return Math.floor(Math.random() * 6) + 1;
+}
 
-     
+function updateScore(newScore) {
+  if (isPlayer1Turn) {
+    player1Score = player1Score + newScore;
+  } else {
+    player2Score = player2Score + newScore;
+  }
+}
 
-     if (ifPlayer1Turn === true) {
-          player2Dice.classList.remove("active")
-          player1Dice.textContent = rollDice
-          player1Dice.classList.add("active")
-          player2Dice.textContent = "-"
-          player1Score+=rollDice
-          player1Scoreboard.textContent = player1Score
-          playerTurn.textContent = "Player 2 Turn"
-          ifPlayer1Turn = false;
+function updateScoreboard(newScore) {
+  if (isPlayer1Turn) {
+    player1Scoreboard.textContent = player1Score;
+  } else {
+    player2Scoreboard.textContent = player2Score;
+  }
+}
 
-     } else {
-          player1Dice.classList.remove("active")
-          player2Dice.textContent = rollDice
-          player2Dice.classList.add("active")
-          player1Dice.textContent = "-"
-          player2Score+=rollDice
-          player2Scoreboard.textContent = player2Score
-          playerTurn.textContent = "Player 1 Turn"
-          ifPlayer1Turn = true;
-     }
+function updateTurnBoard() {
+  if (isPlayer1Turn) {
+    playerTurn.textContent = "Player 1 Turn";
+  } else {
+    playerTurn.textContent = "Player 2 Turn";
+  }
+}
 
+function toggleTurn() {
+  isPlayer1Turn = !isPlayer1Turn;
+}
 
+function gameOver() {
+  if (player1Score > player2Score) {
+    playerTurn.textContent = "Player 1 has won!";
+  } else {
+    playerTurn.textContent = "Player 2 has won!";
+  }
+}
 
-     if (player1Score >= 25) {
-          playerTurn.textContent = "Player 1 has won!"
-          showResetButton()
-     }
+function rollDice(player1Turn) {
+  const diceResult = Math.floor(Math.random() * 6) + 1;
+  const currentPlayer = player1Turn ? player1Dice : player2Dice;
+  const enemy = player1Turn ? player2Dice : player1Dice;
 
-     if (player2Score >= 25) {
-          playerTurn.textContent = "Player 2 has won!"
-          showResetButton()
-     }
+  enemy.classList.remove("active");
+  currentPlayer.textContent = diceResult;
+  currentPlayer.classList.add("active");
+  enemy.textContent = "-";
 
-})
+  updateScore(diceResult);
+  updateScoreboard();
+  updateTurnBoard();
+  toggleTurn();
+}
 
-document.getElementById("resetBtn").addEventListener("click", function() {
-     if (playerTurn.textContent === "Player 1 has won!") {
-          ifPlayer1Turn = true;
-          playerTurn.textContent = "Player 1 Turn";
-          player1Score = 0;
-          player2Score = 0;
-          player1Scoreboard.textContent = 0;
-          player2Scoreboard.textContent = 0
-          player1Dice.textContent = "-"
-          player2Dice.textContent = "-"
-          rollBtn.style.display = "inline-block"
-          resetBtn.style.display = "none"
-          player1Dice.classList.remove("active")
-          player2Dice.classList.remove("active")
-     } else {
-          ifPlayer1Turn = false;
-          playerTurn.textContent = "Player 2 Turn";
-          player1Score = 0;
-          player2Score = 0;
-          player1Scoreboard.textContent = 0;
-          player2Scoreboard.textContent = 0
-          player1Dice.textContent = "-"
-          player2Dice.textContent = "-"
-          rollBtn.style.display = "inline-block"
-          resetBtn.style.display = "none"
-          player1Dice.classList.remove("active")
-          player2Dice.classList.remove("active")
-     }
+function resetGame() {
+  player1Score = 0;
+  player2Score = 0;
+  player1Scoreboard.textContent = 0;
+  player2Scoreboard.textContent = 0;
+  player1Dice.textContent = "-";
+  player2Dice.textContent = "-";
+  rollBtn.style.display = "inline-block";
+  resetBtn.style.display = "none";
+  player1Dice.classList.remove("active");
+  player2Dice.classList.remove("active");
+  playerTurn.textContent = "New Game";
+}
 
-})
+// Event listeners (buttons)
+rollBtn.addEventListener("click", function () {
+  rollDice(isPlayer1Turn);
+
+  if (player1Score >= 25 || player2Score >= 25) {
+    gameOver();
+    showResetButton();
+  }
+});
+
+resetBtn.addEventListener("click", resetGame);
